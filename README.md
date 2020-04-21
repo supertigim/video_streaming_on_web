@@ -24,6 +24,7 @@ Environment
   
 For python 3, 
 ```  
+    # for aiortc 
     $ apt install libavdevice-dev libavfilter-dev libopus-dev libvpx-dev pkg-config
     $ conda create -n vs python=3.7
     $ conda activate vs
@@ -40,7 +41,7 @@ For node.js,
 STUN server  
 =========== 
 
-Bascially, you can use any of public STUN servers on the internet like **stun.l.google.com:19302** or you don't need to use it in this project. However, you might consider running your own STUN in case that you test it on **a Firefox browser without internet**. Here's how to run your own STUN server.  
+Bascially, you can use any of public STUN servers on the internet like **stun.l.google.com:19302** or you don't need it in this project. However, you might consider running your own STUN in case like you test it on **a Firefox browser without internet**. Here's how to run your own STUN server.  
   
 ```  
     $ sudo apt-get install coturn  
