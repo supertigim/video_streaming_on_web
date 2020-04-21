@@ -52,6 +52,15 @@ Bascially, you can use any of public STUN servers on the internet like **stun.l.
     # modify your_own_stun_server in index.js and view.js with the IP address of the server
 ```  
 
+If you want to set SSL, then...
+
+```  
+    $ sudo mkdir /var/local/cert  
+    $ sudo copy ./cert/stun-* /var/local/cert  
+
+    # uncomment line 14, 15 in turnserver.conf  
+```  
+
 
 How to Run  
 =====  
