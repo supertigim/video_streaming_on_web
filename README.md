@@ -26,9 +26,9 @@ For python 3,
 ```  
     # for aiortc 
     $ apt install libavdevice-dev libavfilter-dev libopus-dev libvpx-dev pkg-config
+    $
     $ conda create -n vs python=3.7
     $ conda activate vs
-    (vs)$
     (vs)$ pip install aiohttp aiortc opencv-python 
 ```  
   
