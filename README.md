@@ -52,7 +52,7 @@ Bascially, you can use any of public STUN servers on the internet like **stun.l.
     $ sudo copy ./data/turnserver.conf /etc/turnserver.conf   
     $ sudo turnserver  
 
-    # modify your_own_stun_server in index.js and view.js with the IP address of the server
+    # Put your own stun server IP address in ./webrtc/index.js and ./webrtc/view.js
 ```  
 
 If you want to set SSL, then...
@@ -61,7 +61,7 @@ If you want to set SSL, then...
     $ sudo mkdir /var/local/cert  
     $ sudo copy ./cert/stun-* /var/local/cert  
 
-    # uncomment line 14, 15 in turnserver.conf  
+    # Uncomment line 14, 15 in turnserver.conf  
 ```  
 
 
@@ -77,7 +77,7 @@ For aiohttp/aiortc server,
 
 For react app, 
 ```  
-    # First, modify wss://IP-address:4000/ws with your server IP
+    # Modify wss://IP-address:4000/ws with your server IP
     $
     $ cd react-webrtc-app
     react-webrtc-app$ npm install

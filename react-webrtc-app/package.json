@@ -1,0 +1,46 @@
+{
+  "name": "react-webrtc-app",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.8.3",
+    "@babel/plugin-proposal-class-properties": "^7.7.0",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-react": "^7.7.0"
+  },
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1",
+    "ws": "^7.2.0",
+    "core-js": "^3.6.0",
+    "style-loader": "^1.0.0",
+    "css-loader": "^3.2.0",
+    "regenerator-runtime": "^0.13.3"
+  },
+  "scripts": {
+    "start": "HTTPS=true react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
