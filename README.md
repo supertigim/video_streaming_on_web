@@ -27,6 +27,7 @@ For python 3,
     # for aiortc 
     $ apt install libavdevice-dev libavfilter-dev libopus-dev libvpx-dev pkg-config
     $
+    # Aussme that anaconda or miniconda is already installed
     $ conda create -n vs python=3.7
     $ conda activate vs
     (vs)$ pip install aiohttp aiortc opencv-python 
@@ -34,7 +35,9 @@ For python 3,
   
 For node.js,  
 ```		
-    TBD  
+    $ sudo apt-get install curl  
+    $ curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -  
+    $ sudo apt-get install nodejs
 ```  
 
 
@@ -63,9 +66,9 @@ If you want to set SSL, then...
 
 
 How to Run  
-=====  
+==========  
 
-For server, 
+For aiohttp/aiortc server, 
 ```
     $ conda activate vs 
     (vs) $ cd webrtc  
@@ -74,11 +77,14 @@ For server,
 
 For react app, 
 ```  
-    $ TBD
+    # First, modify wss://IP-address:4000/ws with your server IP
+    $
+    $ cd react-webrtc-app
+    react-webrtc-app$ npm install
+    react-webrtc-app$ npm start 
 ```  
 
-
-Test Instruction  
+How to use  
 ===========   
 
 - Navigate to `https://localhost:4000/`
@@ -96,6 +102,10 @@ Test Instruction
   - On another system(or browser) navigate to https://[ip address]:4000/view
 
   - Click on start button
+
+- Navigate to `https://localhost:3000/`
+
+    - TBD
 
 
 Trouble Shooting  
@@ -132,3 +142,4 @@ Reference
 - [video autoplay fix on iPhone](https://forums.developer.apple.com/thread/79501)  
 - [Setting up Coturn with SSL](https://meetrix.io/blog/webrtc/coturn/installation.html)  
 - [How to fix the ICE candidate problem on iOS](https://stackoverflow.com/questions/51925319/cannot-get-local-candidate-for-webrtc-in-ios-safari)  
+- [create-react-app error fix](https://github.com/facebook/create-react-app/issues/7612)  
