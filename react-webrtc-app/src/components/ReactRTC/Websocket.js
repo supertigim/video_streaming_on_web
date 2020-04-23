@@ -4,9 +4,11 @@ import { TYPE_CONNECTION, TYPE_OFFER, TYPE_ANSWER, TYPE_NEW_USER, TYPE_ICECANDID
 class Websocket extends Component {
   constructor(props) {
     super(props);
+    //this.text = "";
   }
 
   setupConnection = () => {
+    //alert("start!!");
     const {
       socket,
       handleConnectionReady,
@@ -18,6 +20,7 @@ class Websocket extends Component {
 
     socket.onopen = () => {
       console.log('Websocket connected');
+      //alert("Open!!!");
     }
 
     socket.onmessage = (message) => {
@@ -53,6 +56,8 @@ class Websocket extends Component {
 
     socket.onerror = (error) => {
       console.error('Websocket error: ', error);
+      //alert("Error : " + error.toString());
+      //this.text = error.toString();
     }
   }
 

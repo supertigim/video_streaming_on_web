@@ -40,6 +40,30 @@ For node.js,
     $ sudo apt-get install nodejs
 ```  
 
+For **SSL on iOS**, please read [this site](https://github.com/mattdesl/budo/blob/dcbc05866f583e172d6b46c898048436ab84ddae/docs/command-line-usage.md#ssl-on-ios) first. Please make sure that **Websocket** on iOS really depends on SSL. 
+
+```
+    # assume that your IP is 192.168.1.50
+    $ cd cert
+    cert$ openssl genrsa -out server.key 2048
+    cert$ openssl req -new -x509 -sha256 -key server.key -out server.crt -days 365 -subj /CN=192.168.1.50
+    # if you see the error about .rnd, go to trouble shooting section 
+    cert$
+    cert$ sudo npm install budo
+    cert$ budo --ssl --cert=./server.crt --key=./server.key
+```
+- Visit https://192.168.1.50:9966/
+- View and export the certificate as **server.key** <== same name above
+- Update ./cert/server.pem with ./cert/server.key and ./cert/server.crt
+
+```  
+    cert$ copy server.key server.share.pem 
+```  
+- e-mail server.share.pem at an attachment 
+- open the mail on iPhone and click the certificate
+- go to Settings -> Download profile --> Install and verify it 
+- go to Settings -> General -> About -> Certificate Trust Settings --> Turn it On
+
 
 STUN server  
 =========== 
@@ -72,7 +96,7 @@ For aiohttp/aiortc server,
 ```
     $ conda activate vs 
     (vs) $ cd webrtc  
-    (vs) webrtc$ python server.py --cert-file ../cert/common.crt --key-file ../cert/public.key
+    (vs) webrtc$ python server.py --cert-file ../cert/server.crt --key-file ../cert/server.key
 ```
 
 For react app, 
@@ -83,6 +107,7 @@ For react app,
     react-webrtc-app$ npm install
     react-webrtc-app$ npm start 
 ```  
+
 
 How to use  
 ===========   
@@ -111,12 +136,30 @@ How to use
 Trouble Shooting  
 ================  
 
-If you encounter a problem when you install aiortc on Ubuntu 18.04,
+(1) If you encounter a problem when you install aiortc on Ubuntu 18.04,
 
 ```  
     conda install av -c conda-forge  
 ```  
 
+(2) It seems like Safari is the only browser that doesn't accept a self-signed untrusted certificate for secure WebSockets.
+
+- Make sure you're using SHA256 generating the self-signed key
+- Make sure your CommonName is set to the same host (i.e. IP) you are running — you can use the command -subj /CN=192.168.1.54
+- You need to send the .cer file to your phone and manually Install/Trust it (which adds it to General > Profiles)
+- You can find the details in [here](https://github.com/mattdesl/budo/blob/dcbc05866f583e172d6b46c898048436ab84ddae/docs/command-line-usage.md#ssl-on-ios)
+
+(3) can not find ~/your_home/.rnd 
+
+```  
+    openssl rand -out /home/jaykim/.rnd -hex 256
+```  
+
+(4) How to test websocket  
+
+```
+    curl https://127.0.0.1:4000/ws -v -H "Connection: Upgrade" -H "Upgrade: WebSocket"
+```
 
 Reference  
 =========  
@@ -143,3 +186,7 @@ Reference
 - [Setting up Coturn with SSL](https://meetrix.io/blog/webrtc/coturn/installation.html)  
 - [How to fix the ICE candidate problem on iOS](https://stackoverflow.com/questions/51925319/cannot-get-local-candidate-for-webrtc-in-ios-safari)  
 - [create-react-app error fix](https://github.com/facebook/create-react-app/issues/7612)  
+- [How to use dangerouslySetInnerHTML](https://github.com/facebook/react/issues/6544)  
+- [Test streaming url](https://www.radiantmediaplayer.com/test-your-streaming-url.html)  
+- [video autoplay is not working in Safari](https://stackoverflow.com/questions/52399034/video-autoplay-is-not-working-chrome-and-safari)  
+- [Websocket problem regarding SSL on iOS](https://github.com/mattdesl/budo/blob/dcbc05866f583e172d6b46c898048436ab84ddae/docs/command-line-usage.md#ssl-on-ios)

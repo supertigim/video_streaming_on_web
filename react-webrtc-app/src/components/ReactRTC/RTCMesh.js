@@ -22,7 +22,7 @@ class RTCMesh extends Component {
       roomKey: null,
       socketID: null,
       connectionStarted: false,
-      text: ''
+      text: '',
     };
     this.wantCamera = true;
     this.socket = new WebSocket(this.props.URL);
@@ -143,7 +143,7 @@ class RTCMesh extends Component {
     const sendMessage = this.socket.send.bind(this.socket);
 
     return (
-      <>
+      <> 
         <Websocket 
           socket={this.socket}
           setSendMethod={this.setSendMethod}
@@ -176,7 +176,7 @@ class RTCMesh extends Component {
           <div className='button button--start-color' onClick={this.openCamera}>
           </div>
           <button onClick={this.handleShareDisplay}>Share Screen</button>
-          <div className='button button--stop-color' onClick={null}>
+          <div className='button button--stop-color' onClick={this.testSocket}>
           </div>
         </section>
       </>
