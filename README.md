@@ -17,6 +17,7 @@ Browser Test
 **[Not supported]**
 - Microsoft Edge
 - Internet Explorer
+- Chrome on iOS (iPhone, iPad , etc)
 
 
 Environment  
@@ -40,7 +41,7 @@ For node.js,
     $ sudo apt-get install nodejs
 ```  
 
-For **SSL on iOS**, please read [this site](https://github.com/mattdesl/budo/blob/dcbc05866f583e172d6b46c898048436ab84ddae/docs/command-line-usage.md#ssl-on-ios) first. Please make sure that **Websocket** on iOS really depends on SSL. 
+For **SSL on iOS**, please read [this site](https://github.com/mattdesl/budo/blob/dcbc05866f583e172d6b46c898048436ab84ddae/docs/command-line-usage.md#ssl-on-ios) first and make sure that **Websocket** on iOS really depends on SSL. 
 
 ```
     # assume that your IP is 192.168.1.50
@@ -53,16 +54,16 @@ For **SSL on iOS**, please read [this site](https://github.com/mattdesl/budo/blo
     cert$ budo --ssl --cert=./server.crt --key=./server.key
 ```
 - Visit https://192.168.1.50:9966/
-- View and export the certificate as **server.key** <== same name above
+- View and export the certificate as **server.key** <== the same name above
 - Update ./cert/server.pem with ./cert/server.key and ./cert/server.crt
 
 ```  
     cert$ copy server.key server.share.pem 
 ```  
-- e-mail server.share.pem at an attachment 
-- open the mail on iPhone and click the certificate
-- go to Settings -> Download profile --> Install and verify it 
-- go to Settings -> General -> About -> Certificate Trust Settings --> Turn it On
+- Email server.share.pem as an attachment to yourself 
+- Open the mail on iPhone and click the certificate to download
+- Go to Settings -> Download Profile --> Install and verify it 
+- Go to Settings -> General -> About -> Certificate Trust Settings --> Turn it On
 
 
 STUN server  
@@ -87,6 +88,11 @@ If you want to set SSL, then...
 
     # Uncomment line 14, 15 in turnserver.conf  
 ```  
+
+Do **NOT** forget to update the followin files
+- line 19 in ./webrtc/index.js
+- line 19 in ./webrtc/view.js
+- line 2 in ./react-webrct-app/src/components/ReactRTC/functions/constants.js
 
 
 How to Run  
