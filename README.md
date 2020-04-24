@@ -7,13 +7,14 @@ This project shows how to do video streaming on web epecially using WebRTC with 
 
 ![](/data/video_streaming_system_architecture.png)  
 
+
 Browser Test    
 ===============  
 
 **[Supported]**
-- Chrome on Ubuntu 18.04, MacOS, and Windows
-- Firefox on Ubuntu 18.04
-- Safari on MacOS, iOS (iPhone 6.0)
+- Chrome on Ubuntu(Linux), macOS, and Windows
+- Firefox on Ubuntu(Linux)
+- Safari on macOS and iOS (iPhone, iPad, etc)
 
 **[Not supported]**
 - Microsoft Edge
