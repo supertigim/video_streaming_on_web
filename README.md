@@ -5,6 +5,7 @@ This project shows how to do video streaming on web epecially using WebRTC with 
 
 **Note**: Only run and tested on Ubuntu 18.04. 
 
+![](/data/video_streaming_system_architecture.png)  
 
 Browser Test    
 ===============  
@@ -196,3 +197,4 @@ Reference
 - [Test streaming url](https://www.radiantmediaplayer.com/test-your-streaming-url.html)  
 - [video autoplay is not working in Safari](https://stackoverflow.com/questions/52399034/video-autoplay-is-not-working-chrome-and-safari)  
 - [Websocket problem regarding SSL on iOS](https://github.com/mattdesl/budo/blob/dcbc05866f583e172d6b46c898048436ab84ddae/docs/command-line-usage.md#ssl-on-ios)
+- [EasyRTC + React](https://github.com/Techistan/Video-Conferencing-With-EasyRTC)  
