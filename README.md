@@ -159,7 +159,7 @@ Trouble Shooting
 (3) can not find ~/your_home/.rnd 
 
 ```  
-    openssl rand -out /home/jaykim/.rnd -hex 256
+    openssl rand -out /home/your_home/.rnd -hex 256
 ```  
 
 (4) How to test websocket  
