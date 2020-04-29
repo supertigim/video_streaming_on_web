@@ -119,8 +119,10 @@ For react app,
 
 How to use  
 ===========   
+  
+You need to put a exact ip address on a browswer because **localhost** or **127.0.0.1** don't work due to https with the certificate which has its own ip address.   
 
-- Navigate to `https://localhost:4000/`
+- Navigate to `https://ip address:4000/`
 
     - Check the below options
 
@@ -136,9 +138,20 @@ How to use
 
   - Click on start button
 
-- Navigate to `https://localhost:3000/`
+- Navigate to `https://ip address:3000/`
 
-    - TBD
+    - Click the button to connect to the cam 
+
+
+[Reference - One on One Test using ReactRTC Module]
+
+- Open a new browser and navigate to 'https://ip address:3000/one_on_one'
+    - Click the green button next to 'Share Screen'
+    - Enter a room key in the text box and click 'submit' 
+
+- Open another new browser and navigate to 'https://ip address:3000/one_on_one'
+    - Click the green button next to 'Share Screen'
+    - Enter the same room key in the text box and click 'submit' 
 
 
 Trouble Shooting  
@@ -199,3 +212,5 @@ Reference
 - [video autoplay is not working in Safari](https://stackoverflow.com/questions/52399034/video-autoplay-is-not-working-chrome-and-safari)  
 - [Websocket problem regarding SSL on iOS](https://github.com/mattdesl/budo/blob/dcbc05866f583e172d6b46c898048436ab84ddae/docs/command-line-usage.md#ssl-on-ios)
 - [EasyRTC + React](https://github.com/Techistan/Video-Conferencing-With-EasyRTC)  
+- [IP Camera + OpenCV + Python 3](https://cybercitycircuits.com/python-3-and-opencv-with-an-ip-camera/)  
+- [ReactJS Joystick Feature](https://loopmode.github.io/react-nipple/)  

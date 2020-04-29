@@ -13,14 +13,16 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "core-js": "^3.6.0",
+    "css-loader": "^3.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-nipple": "^1.0.2",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
-    "ws": "^7.2.0",
-    "core-js": "^3.6.0",
+    "regenerator-runtime": "^0.13.3",
     "style-loader": "^1.0.0",
-    "css-loader": "^3.2.0",
-    "regenerator-runtime": "^0.13.3"
+    "ws": "^7.2.0"
   },
   "scripts": {
     "start": "HTTPS=true react-scripts start host=0.0.0.0",

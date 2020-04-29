@@ -16,156 +16,158 @@ from ws_signaling import WSSignaling
 
 ROOT = os.path.dirname(__file__)
 
-logger = logging.getLogger("pc")
-pcs = set()
-local_video = None
+class WebRTCApp:
 
-async def index(request):
-    content = open(os.path.join(ROOT, "index.html"), "r").read()
-    return web.Response(content_type="text/html", text=content)
+    def __init__(self):
+        self.logger = logging.getLogger("pc")
+        self.pcs = set()
+        self.local_video = None
 
-async def javascript_index(request):
-    content = open(os.path.join(ROOT, "index.js"), "r").read()
-    return web.Response(content_type="application/javascript", text=content)
+    async def index(self, request):
+        content = open(os.path.join(ROOT, "index.html"), "r").read()
+        return web.Response(content_type="text/html", text=content)
 
-async def view(request):
-    content = open(os.path.join(ROOT, "view.html"), "r").read()
-    return web.Response(content_type="text/html", text=content)
+    async def javascript_index(self, request):
+        content = open(os.path.join(ROOT, "index.js"), "r").read()
+        return web.Response(content_type="application/javascript", text=content)
 
-async def javascript_view(request):
-    content = open(os.path.join(ROOT, "view.js"), "r").read()
-    return web.Response(content_type="application/javascript", text=content)
+    async def view(self, request):
+        content = open(os.path.join(ROOT, "view.html"), "r").read()
+        return web.Response(content_type="text/html", text=content)
 
-async def offer_view(request):
-    params = await request.json()
-    offer = RTCSessionDescription(sdp=params["sdp"], type=params["type"])
+    async def javascript_view(self, request):
+        content = open(os.path.join(ROOT, "view.js"), "r").read()
+        return web.Response(content_type="application/javascript", text=content)
 
-    pc = RTCPeerConnection()
-    pc_id = "PeerConnection(%s)" % uuid.uuid4()
-    pcs.add(pc)
+    async def offer_view(self, request):
+        params = await request.json()
+        offer = RTCSessionDescription(sdp=params["sdp"], type=params["type"])
 
-    def log_info(msg, *args):
-        logger.info(pc_id + " " + msg, *args)
+        pc = RTCPeerConnection()
+        pc_id = "PeerConnection(%s)" % uuid.uuid4()
+        self.pcs.add(pc)
 
-    log_info("Receiving for %s", request.remote)
+        def log_info(msg, *args):
+            self.logger.info(pc_id + " " + msg, *args)
 
-    @pc.on("datachannel")
-    def on_datachannel(channel):
-        @channel.on("message")
-        def on_message(message):
-            if isinstance(message, str) and message.startswith("ping"):
-                channel.send("pong" + message[4:])
+        log_info("Receiving for %s", request.remote)
 
-    @pc.on("iceconnectionstatechange")
-    async def on_iceconnectionstatechange():
-        log_info("ICE connection state is %s", pc.iceConnectionState)
-        if pc.iceConnectionState == "failed":
-            await pc.close()
-            pcs.discard(pc)
+        @pc.on("datachannel")
+        def on_datachannel(channel):
+            @channel.on("message")
+            def on_message(message):
+                if isinstance(message, str) and message.startswith("ping"):
+                    channel.send("pong" + message[4:])
 
-    # handle offer
-    await pc.setRemoteDescription(offer)
-    #await recorder.start()
+        @pc.on("iceconnectionstatechange")
+        async def on_iceconnectionstatechange():
+            log_info("ICE connection state is %s", pc.iceConnectionState)
+            if pc.iceConnectionState == "failed":
+                await pc.close()
+                pcs.discard(pc)
 
-    for t in pc.getTransceivers():
-        # if t.kind == "audio" and player.audio:
-        #     pc.addTrack(player.audio)
-        if t.kind == "video":
-            print(local_video)
-            pc.addTrack(local_video)
+        # handle offer
+        await pc.setRemoteDescription(offer)
+        #await recorder.start()
 
-    # send answer
-    answer = await pc.createAnswer()
-    await pc.setLocalDescription(answer)
+        for t in pc.getTransceivers():
+            # if t.kind == "audio" and player.audio:
+            #     pc.addTrack(player.audio)
+            if t.kind == "video":
+                print(self.local_video)
+                pc.addTrack(self.local_video)
 
-    return web.Response(
-        content_type="application/json",
-        text=json.dumps(
-            {
-            "sdp": pc.localDescription.sdp,
-            "type": pc.localDescription.type
-            }
-        ),
-    )
+        # send answer
+        answer = await pc.createAnswer()
+        await pc.setLocalDescription(answer)
 
-async def offer(request):
-    params = await request.json()
-    offer = RTCSessionDescription(sdp=params["sdp"], type=params["type"])
+        return web.Response(
+            content_type="application/json",
+            text=json.dumps(
+                {
+                "sdp": pc.localDescription.sdp,
+                "type": pc.localDescription.type
+                }
+            ),
+        )
 
-    pc = RTCPeerConnection()
-    pc_id = "PeerConnection(%s)" % uuid.uuid4()
-    pcs.add(pc)
+    async def offer(self, request):
+        params = await request.json()
+        offer = RTCSessionDescription(sdp=params["sdp"], type=params["type"])
 
-    def log_info(msg, *args):
-        logger.info(pc_id + " " + msg, *args)
+        pc = RTCPeerConnection()
+        pc_id = "PeerConnection(%s)" % uuid.uuid4()
+        self.pcs.add(pc)
 
-    log_info("Created for %s", request.remote)
+        def log_info(msg, *args):
+            self.logger.info(pc_id + " " + msg, *args)
 
-    # prepare local media
-    player = MediaPlayer(os.path.join(ROOT, "../data/demo-instruct.wav"))
-    if args.write_audio:
-        recorder = MediaRecorder(args.write_audio)
-    else:
-        recorder = MediaBlackhole()
+        log_info("Created for %s", request.remote)
 
-    @pc.on("datachannel")
-    def on_datachannel(channel):
-        @channel.on("message")
-        def on_message(message):
-            if isinstance(message, str) and message.startswith("ping"):
-                channel.send("pong" + message[4:])
+        # prepare local media
+        player = MediaPlayer(os.path.join(ROOT, "../data/demo-instruct.wav"))
+        if args.write_audio:
+            recorder = MediaRecorder(args.write_audio)
+        else:
+            recorder = MediaBlackhole()
 
-    @pc.on("iceconnectionstatechange")
-    async def on_iceconnectionstatechange():
-        log_info("ICE connection state is %s", pc.iceConnectionState)
-        if pc.iceConnectionState == "failed":
-            await pc.close()
-            pcs.discard(pc)
+        @pc.on("datachannel")
+        def on_datachannel(channel):
+            @channel.on("message")
+            def on_message(message):
+                if isinstance(message, str) and message.startswith("ping"):
+                    channel.send("pong" + message[4:])
 
-    @pc.on("track")
-    def on_track(track):
-        global local_video
-        log_info("Track %s received", track.kind)
+        @pc.on("iceconnectionstatechange")
+        async def on_iceconnectionstatechange():
+            log_info("ICE connection state is %s", pc.iceConnectionState)
+            if pc.iceConnectionState == "failed":
+                await pc.close()
+                self.pcs.discard(pc)
 
-        if track.kind == "audio":
-            pc.addTrack(player.audio)
-            recorder.addTrack(track)
-        elif track.kind == "video":
-            print(local_video)
-            print("done")
-            local_video = VideoTransformTrack(
-                track, transform=params["video_transform"]
-            )
-            pc.addTrack(local_video)
+        @pc.on("track")
+        def on_track(track):
+            log_info("Track %s received", track.kind)
 
-        @track.on("ended")
-        async def on_ended():
-            log_info("Track %s ended", track.kind)
-            await recorder.stop()
+            if track.kind == "audio":
+                pc.addTrack(player.audio)
+                recorder.addTrack(track)
+            elif track.kind == "video":
+                print(self.local_video)
+                print("done")
+                self.local_video = VideoTransformTrack(
+                    track, transform=params["video_transform"]
+                )
+                pc.addTrack(self.local_video)
 
-    # handle offer
-    await pc.setRemoteDescription(offer)
-    await recorder.start()
+            @track.on("ended")
+            async def on_ended():
+                log_info("Track %s ended", track.kind)
+                await recorder.stop()
 
-    # send answer
-    answer = await pc.createAnswer()
-    await pc.setLocalDescription(answer)
+        # handle offer
+        await pc.setRemoteDescription(offer)
+        await recorder.start()
 
-    return web.Response(
-        content_type="application/json",
-        text=json.dumps(
-            {
-            "sdp": pc.localDescription.sdp,
-            "type": pc.localDescription.type
-            }
-        ),
-    )
+        # send answer
+        answer = await pc.createAnswer()
+        await pc.setLocalDescription(answer)
 
-async def on_shutdown(app):
-    # close peer connections
-    coros = [pc.close() for pc in pcs]
-    await asyncio.gather(*coros)
-    pcs.clear()
+        return web.Response(
+            content_type="application/json",
+            text=json.dumps(
+                {
+                "sdp": pc.localDescription.sdp,
+                "type": pc.localDescription.type
+                }
+            ),
+        )
+
+    async def on_shutdown(self, app):
+        # close peer connections
+        coros = [pc.close() for pc in self.pcs]
+        await asyncio.gather(*coros)
+        self.pcs.clear()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -191,18 +193,20 @@ if __name__ == "__main__":
     else:
         ssl_context = None
 
+    webrtc = WebRTCApp()
+
     app = web.Application()
-    app.on_shutdown.append(on_shutdown)
+    app.on_shutdown.append(webrtc.on_shutdown)
 
-    app.router.add_get("/", index)
-    app.router.add_get("/index.js", javascript_index)
-    app.router.add_post("/offer", offer)
+    app.router.add_get("/", webrtc.index)
+    app.router.add_get("/index.js", webrtc.javascript_index)
+    app.router.add_post("/offer", webrtc.offer)
     
-    app.router.add_get("/view", view)
-    app.router.add_get("/view.js", javascript_view)
-    app.router.add_post("/offer_view", offer_view)
+    app.router.add_get("/view", webrtc.view)
+    app.router.add_get("/view.js", webrtc.javascript_view)
+    app.router.add_post("/offer_view", webrtc.offer_view)
 
-    app.add_routes([web.get('/ws', WSSignaling().websocket_handler)])
+    app.add_routes([web.get('/ws', WSSignaling(webrtc).websocket_handler)])
 
     web.run_app(app, access_log=None, port=args.port, ssl_context=ssl_context) #host='127.0.0.1',
 

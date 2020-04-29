@@ -11,7 +11,7 @@ import 'regenerator-runtime'
 class RTCMesh extends Component {
   constructor(props) {
     super(props);
-    const {mediaConstraints, iceServers, URL } = props;
+    const {mediaConstraints, iceServers} = props;
     // build iceServers config for RTCPeerConnection
     const iceServerURLs = buildServers(iceServers);
     this.state = {
@@ -25,6 +25,7 @@ class RTCMesh extends Component {
       text: '',
     };
     this.wantCamera = true;
+    //this.socket = new WebSocket(WS_URL);
     this.socket = new WebSocket(this.props.URL);
     this.rtcPeerConnection = new RTCPeerConnection({ iceServers: this.state.iceServers });
   }
