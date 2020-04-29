@@ -46,7 +46,7 @@ For node.js,
 For **SSL on iOS**, please read [this site](https://github.com/mattdesl/budo/blob/dcbc05866f583e172d6b46c898048436ab84ddae/docs/command-line-usage.md#ssl-on-ios) first and make sure that **Websocket** on iOS really depends on SSL. 
 
 ```
-    # assume that your IP is 192.168.1.50
+    # assume that your IP address is 192.168.1.50
     $ cd cert
     cert$ openssl genrsa -out server.key 2048
     cert$ openssl req -new -x509 -sha256 -key server.key -out server.crt -days 365 -subj /CN=192.168.1.50
@@ -66,6 +66,9 @@ For **SSL on iOS**, please read [this site](https://github.com/mattdesl/budo/blo
 - Open the mail on iPhone and click the certificate to download
 - Go to Settings -> Download Profile --> Install and verify it 
 - Go to Settings -> General -> About -> Certificate Trust Settings --> Turn it On
+
+Do **NOT** forget to update the followin files
+- line 6 in ./react-webrct-app/src/components/const.js
 
 
 STUN server  
