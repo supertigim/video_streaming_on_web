@@ -120,9 +120,9 @@ For react app,
 How to use  
 ===========   
   
-You need to put a exact ip address on a browswer because **localhost** or **127.0.0.1** don't work due to https with the certificate which has its own ip address.   
+You need to put an exact IP address on a browswer because **localhost** or **127.0.0.1** don't work with the certificate which is created by the IP address of your machine.   
 
-- Navigate to `https://ip address:4000/`
+- Navigate to `https://your_IP_address:4000/`
 
     - Check the below options
 
@@ -134,22 +134,22 @@ You need to put a exact ip address on a browswer because **localhost** or **127.
 
   - Once the video is successfully getting processed, proceed to view
 
-  - On another system(or browser) navigate to https://[ip address]:4000/view
+  - On another system(or browser) navigate to https://[your_IP_address]:4000/view
 
   - Click on start button
 
-- Navigate to `https://ip address:3000/`
+- Navigate to `https://your_IP_address:3000/`
 
     - Click the button to connect to the cam 
 
 
 [Reference - One on One Test using ReactRTC Module]
 
-- Open a new browser and navigate to 'https://ip address:3000/one_on_one'
+- Open a new browser and navigate to 'https://your_IP_address:3000/one_on_one'
     - Click the green button next to 'Share Screen'
     - Enter a room key in the text box and click 'submit' 
 
-- Open another new browser and navigate to 'https://ip address:3000/one_on_one'
+- Open another new browser and navigate to 'https://your_IP_address:3000/one_on_one'
     - Click the green button next to 'Share Screen'
     - Enter the same room key in the text box and click 'submit' 
 

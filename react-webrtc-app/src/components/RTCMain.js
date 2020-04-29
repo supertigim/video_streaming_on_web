@@ -107,7 +107,7 @@ class RTCMain extends Component {
           <div className={classes.Content}>
               <div className={classes.SubContent} >
                   <h1>Tigim Insight</h1>
-                  <p>Mobile Robot Joystic</p>
+                  <p>Mobile Robot Joystick</p>
                   <button type="button" className="btn btn-outline-dark" onClick={this.handleButtonClick} >Connect the Cam</button>
                   <ReactNipple
                     // supports all nipplejs options
